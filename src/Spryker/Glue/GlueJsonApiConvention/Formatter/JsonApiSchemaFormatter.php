@@ -180,7 +180,7 @@ class JsonApiSchemaFormatter implements SchemaFormatterInterface
             }
             $operation['requestBody']['content'] = $this->addContent(
                 $contentTypes,
-                $resourceType . static::PART_REQUEST,
+                $this->hyphenToCamel($resourceType) . static::PART_REQUEST,
             );
         }
 
@@ -378,5 +378,15 @@ class JsonApiSchemaFormatter implements SchemaFormatterInterface
 
         /** @phpstan-var string */
         return end($transferClassNameExploded);
+    }
+
+    /**
+     * @param string $string
+     *
+     * @return string
+     */
+    protected function hyphenToCamel(string $string): string
+    {
+        return str_replace('-', '', ucwords($string, '-'));
     }
 }
